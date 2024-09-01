@@ -2,21 +2,26 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { screen } from '@testing-library/angular';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { register } from '../../store';
 
 import RegisterComponent from './register.component';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
+  let store: MockStore;
+  const initialState = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RegisterComponent, ReactiveFormsModule],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), provideMockStore({ initialState })],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
+    store = TestBed.inject(MockStore);
     fixture.detectChanges();
   });
 
@@ -65,13 +70,19 @@ describe('RegisterComponent', () => {
         email: 'mail@test.com',
         password: 'Secret123',
       });
-      const consoleSpy = jest.spyOn(console, 'log');
+      const dispatchSpy = jest.spyOn(store, 'dispatch');
       component.onSubmit();
-      expect(consoleSpy).toHaveBeenCalledWith({
-        username: 'test',
-        email: 'mail@test.com',
-        password: 'Secret123',
-      });
+      expect(dispatchSpy).toHaveBeenCalledWith(
+        register({
+          payload: {
+            user: {
+              username: 'test',
+              email: 'mail@test.com',
+              password: 'Secret123',
+            },
+          },
+        }),
+      );
     });
   });
 });

@@ -6,8 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
 
-import { SignUpForm } from '../../types';
+import { SignUpForm, SignUpPayload } from '../../types';
+import { register } from '../../store';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +21,7 @@ import { SignUpForm } from '../../types';
 export default class RegisterComponent implements OnInit {
   registerForm!: FormGroup<SignUpForm>;
   #fb = inject(FormBuilder);
+  #store = inject(Store);
 
   get disableSubmit(): boolean {
     return this.registerForm.invalid;
@@ -36,6 +39,9 @@ export default class RegisterComponent implements OnInit {
     if (this.disableSubmit) return;
 
     // TODO: Implement form submission
-    console.log(this.registerForm.value);
+    const payload: SignUpPayload = {
+      user: this.registerForm.getRawValue(),
+    };
+    this.#store.dispatch(register({ payload }));
   }
 }
