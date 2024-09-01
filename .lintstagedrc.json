@@ -1,7 +1,8 @@
 {
   "*.ts": [
     "eslint --fix",
-    "prettier --write"
+    "prettier --write",
+    "jest --coverage --findRelatedTests --passWithNoTests --config='jest.config.ts'"
   ],
   "*.html": [
     "prettier --write",
