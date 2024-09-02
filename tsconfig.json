@@ -10,6 +10,10 @@
         "src/app/shared/*"
       ]
     },
+    "types": [
+      "node",
+      "jest"
+    ],
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
