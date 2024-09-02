@@ -33,6 +33,7 @@
     "@angular/compiler-cli": "^18.2.0",
     "@commitlint/cli": "19.4.1",
     "@commitlint/config-conventional": "19.4.1",
+    "@ngx-env/builder": "18.0.1",
     "@testing-library/angular": "17.3.1",
     "@testing-library/user-event": "14.5.2",
     "@types/jest": "29.5.12",

@@ -22,6 +22,7 @@ const config: Config = {
     'jest.config.ts',
     'setup-jest.ts',
     'app/app.config.ts',
+    'app/environments/',
   ],
 };
 
