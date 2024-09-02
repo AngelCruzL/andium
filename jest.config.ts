@@ -14,12 +14,14 @@ const config: Config = {
       statements: 80,
     },
   },
-  testPathIgnorePatterns: [
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/coverage/'],
+  coveragePathIgnorePatterns: [
     '/node_modules/',
     '/dist/',
     '/coverage/',
     'jest.config.ts',
     'setup-jest.ts',
+    'app/app.config.ts',
   ],
 };
 
