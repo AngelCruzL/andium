@@ -6,9 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 
-import { AuthState, SignUpForm, SignUpPayload } from '../../types';
+import { SignUpForm, SignUpPayload } from '../../types';
 import { register, selectIsSubmitting } from '../../store';
 
 @Component({
@@ -21,11 +22,13 @@ import { register, selectIsSubmitting } from '../../store';
 export default class RegisterComponent implements OnInit {
   registerForm!: FormGroup<SignUpForm>;
   #fb = inject(FormBuilder);
-  #store = inject(Store<{ auth: AuthState }>);
-  isSubmitting$ = this.#store.select(selectIsSubmitting);
+  #store = inject(Store);
+  $isSubmitting = toSignal(this.#store.select(selectIsSubmitting), {
+    initialValue: false,
+  });
 
   get disableSubmit(): boolean {
-    return this.registerForm.invalid;
+    return this.registerForm.invalid || this.$isSubmitting();
   }
 
   ngOnInit(): void {

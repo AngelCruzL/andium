@@ -1,4 +1,5 @@
 import type { FormControl } from '@angular/forms';
+
 import { User } from '@shared/types';
 
 export interface SignUpForm {
