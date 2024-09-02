@@ -2,7 +2,7 @@ import { AuthState } from '../types';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { register } from './actions';
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   isSubmitting: false,
 };
 
@@ -14,4 +14,8 @@ const authFeature = createFeature({
   ),
 });
 
-export const { name: authFeatureKey, reducer: authReducer } = authFeature;
+export const {
+  name: authFeatureKey,
+  reducer: authReducer,
+  selectIsSubmitting,
+} = authFeature;

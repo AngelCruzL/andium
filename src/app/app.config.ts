@@ -8,7 +8,7 @@ import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 import { routes } from './app.routes';
-import { authFeatureKey, authReducer } from './features/auth/store/reducers';
+import { authFeatureKey, authReducer } from './features/auth/store';
 
 export const appConfig: ApplicationConfig = {
   providers: [

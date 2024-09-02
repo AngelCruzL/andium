@@ -8,8 +8,8 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { SignUpForm, SignUpPayload } from '../../types';
-import { register } from '../../store';
+import { AuthState, SignUpForm, SignUpPayload } from '../../types';
+import { register, selectIsSubmitting } from '../../store';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +21,8 @@ import { register } from '../../store';
 export default class RegisterComponent implements OnInit {
   registerForm!: FormGroup<SignUpForm>;
   #fb = inject(FormBuilder);
-  #store = inject(Store);
+  #store = inject(Store<{ auth: AuthState }>);
+  isSubmitting$ = this.#store.select(selectIsSubmitting);
 
   get disableSubmit(): boolean {
     return this.registerForm.invalid;
