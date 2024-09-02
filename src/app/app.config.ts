@@ -6,11 +6,15 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideState, provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 import { routes } from './app.routes';
-import { authFeatureKey, authReducer } from './features/auth/store';
-import { provideEffects } from '@ngrx/effects';
+import {
+  authEffects,
+  authFeatureKey,
+  authReducer,
+} from './features/auth/store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore(),
     provideState(authFeatureKey, authReducer),
+    provideEffects(authEffects),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
@@ -26,6 +31,5 @@ export const appConfig: ApplicationConfig = {
       trace: false,
       traceLimit: 75,
     }),
-    provideEffects(),
   ],
 };

@@ -1,6 +1,7 @@
-import { authReducer, initialState } from './reducers';
-import * as actions from './actions';
 import { User } from '@shared/types';
+
+import { authReducer, initialState } from './reducers';
+import { authActions } from './actions';
 
 describe('AuthReducers', () => {
   it('should returns a default state', () => {
@@ -19,7 +20,7 @@ describe('AuthReducers', () => {
       email: 'mail@mail.com',
       password: 'Secret123',
     };
-    const action = actions.register({ payload: { user: mockUser } });
+    const action = authActions.register({ payload: { user: mockUser } });
     const state = authReducer(initialState, action);
     const newState = {
       isSubmitting: true,

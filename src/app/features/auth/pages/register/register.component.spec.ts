@@ -3,8 +3,8 @@ import { provideRouter } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { screen } from '@testing-library/angular';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { register } from '../../store';
 
+import { authActions } from '../../store';
 import RegisterComponent from './register.component';
 
 describe('RegisterComponent', () => {
@@ -73,7 +73,7 @@ describe('RegisterComponent', () => {
       const dispatchSpy = jest.spyOn(store, 'dispatch');
       component.onSubmit();
       expect(dispatchSpy).toHaveBeenCalledWith(
-        register({
+        authActions.register({
           payload: {
             user: {
               username: 'test',

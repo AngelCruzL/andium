@@ -10,7 +10,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 
 import { SignUpForm, SignUpPayload } from '../../types';
-import { register, selectIsSubmitting } from '../../store';
+import { authActions, selectIsSubmitting } from '../../store';
 
 @Component({
   selector: 'app-register',
@@ -42,10 +42,9 @@ export default class RegisterComponent implements OnInit {
   onSubmit(): void {
     if (this.disableSubmit) return;
 
-    // TODO: Implement form submission
     const payload: SignUpPayload = {
       user: this.registerForm.getRawValue(),
     };
-    this.#store.dispatch(register({ payload }));
+    this.#store.dispatch(authActions.register({ payload }));
   }
 }
