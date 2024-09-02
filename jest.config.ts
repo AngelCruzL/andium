@@ -1,4 +1,7 @@
 import type { Config } from 'jest';
+import { pathsToModuleNameMapper } from 'ts-jest';
+
+import { compilerOptions } from './tsconfig.json';
 
 const config: Config = {
   preset: 'jest-preset-angular',
@@ -14,6 +17,10 @@ const config: Config = {
       statements: 80,
     },
   },
+  moduleDirectories: ['node_modules', '<rootDir>'],
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/',
+  }),
   testPathIgnorePatterns: ['/node_modules/', '/dist/', '/coverage/'],
   coveragePathIgnorePatterns: [
     '/node_modules/',
