@@ -8,7 +8,7 @@
           <a routerLink="/auth/login">Have an account?</a>
         </p>
 
-        BACKEND_ERRORS
+        <app-backend-error-messages [backendErrors]="$data().validationErrors" />
 
         <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
           <fieldset class="form-group">

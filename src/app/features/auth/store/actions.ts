@@ -1,6 +1,6 @@
-import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { createActionGroup, props } from '@ngrx/store';
 
-import { CurrentUser } from '@shared/types';
+import { BackendErrors, CurrentUser } from '@shared/types';
 import { SignUpPayload } from '../types';
 
 export const authActions = createActionGroup({
@@ -8,6 +8,6 @@ export const authActions = createActionGroup({
   events: {
     Register: props<{ payload: SignUpPayload }>(),
     'Register Success': props<{ currentUser: CurrentUser }>(),
-    'Register Failure': emptyProps(),
+    'Register Failure': props<{ errors: BackendErrors }>(),
   },
 });
