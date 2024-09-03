@@ -11,6 +11,7 @@ import { AuthService } from '../services';
 import { authActions } from './actions';
 import {
   loginEffect,
+  redirectAfterLoginEffect,
   redirectAfterRegisterEffect,
   registerEffect,
 } from './effects';
@@ -124,11 +125,9 @@ describe('AuthEffects', () => {
         );
 
         TestBed.runInInjectionContext(() => {
-          redirectAfterRegisterEffect(actionsMock$, routerMock).subscribe(
-            () => {
-              expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/');
-            },
-          );
+          redirectAfterLoginEffect(actionsMock$, routerMock).subscribe(() => {
+            expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/');
+          });
         });
       });
     });
