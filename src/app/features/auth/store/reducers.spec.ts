@@ -104,4 +104,28 @@ describe('AuthReducers', () => {
       expect(state).toEqual(newState);
     });
   });
+
+  it('should clean validationErrors at routerNavigatedAction', () => {
+    const action = authActions.loginFailure({ errors: errorMocks });
+    const state = authReducer(initialState, action);
+    const newState = {
+      isSubmitting: false,
+      isLoading: false,
+      currentUser: undefined,
+      validationErrors: errorMocks,
+    };
+
+    expect(state).toEqual(newState);
+
+    const routerAction = { type: '@ngrx/router-store/navigated' };
+    const stateAfterRouter = authReducer(state, routerAction);
+    const newStateAfterRouter = {
+      isSubmitting: false,
+      isLoading: false,
+      currentUser: undefined,
+      validationErrors: null,
+    };
+
+    expect(stateAfterRouter).toEqual(newStateAfterRouter);
+  });
 });
