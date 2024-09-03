@@ -1,40 +1,25 @@
-import { of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
+import { of, throwError } from 'rxjs';
 
-import { CurrentUser } from '@shared/types';
-import { SignUpPayload } from '../types';
+import { currentUserMock, signUpPayloadMock } from '../utils';
 import { AuthService } from '../services';
 import { authActions } from './actions';
 import { redirectAfterRegisterEffect, registerEffect } from './effects';
-import { Router } from '@angular/router';
 
 describe('AuthEffects', () => {
-  const payload: SignUpPayload = {
-    user: {
-      username: 'testuser',
-      password: 'password123',
-      email: 'test@test.com',
-    },
-  };
-
   it('should return a "registerSuccess" action', () => {
-    const userResponseMock: CurrentUser = {
-      bio: null,
-      image: null,
-      username: 'testuser',
-      token: 'some-token',
-      email: 'test@test.com',
-    };
-
     const authServiceMock = {
-      register: () => of(userResponseMock),
+      register: () => of(currentUserMock),
     } as unknown as AuthService;
-    const actionsMock$ = of(authActions.register({ payload }));
+    const actionsMock$ = of(
+      authActions.register({ payload: signUpPayloadMock }),
+    );
 
     TestBed.runInInjectionContext(() => {
       registerEffect(actionsMock$, authServiceMock).subscribe(action => {
         expect(action).toEqual(
-          authActions.registerSuccess({ currentUser: userResponseMock }),
+          authActions.registerSuccess({ currentUser: currentUserMock }),
         );
       });
     });
@@ -48,7 +33,9 @@ describe('AuthEffects', () => {
           error: { errors: mockErrors },
         })),
     } as unknown as AuthService;
-    const actionsMock$ = of(authActions.register({ payload }));
+    const actionsMock$ = of(
+      authActions.register({ payload: signUpPayloadMock }),
+    );
 
     TestBed.runInInjectionContext(() => {
       registerEffect(actionsMock$, authServiceMock).subscribe(action => {

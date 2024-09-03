@@ -1,6 +1,6 @@
 import type { FormControl } from '@angular/forms';
 
-import { User } from '@shared/types';
+import { SignUpUser } from '@shared/types';
 
 export interface SignUpForm {
   username: FormControl<string>;
@@ -9,5 +9,5 @@ export interface SignUpForm {
 }
 
 export interface SignUpPayload {
-  user: User;
+  user: SignUpUser;
 }
