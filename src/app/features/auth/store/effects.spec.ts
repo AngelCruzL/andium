@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
+import { Actions } from '@ngrx/effects';
 import { of, throwError } from 'rxjs';
 
 import {
@@ -27,8 +28,15 @@ describe('AuthEffects', () => {
         authActions.register({ payload: signUpPayloadMock }),
       );
 
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Actions, useValue: actionsMock$ },
+        ],
+      });
+
       TestBed.runInInjectionContext(() => {
-        registerEffect(actionsMock$, authServiceMock).subscribe(action => {
+        registerEffect().subscribe(action => {
           expect(action).toEqual(
             authActions.registerSuccess({ currentUser: currentUserMock }),
           );
@@ -48,8 +56,15 @@ describe('AuthEffects', () => {
         authActions.register({ payload: signUpPayloadMock }),
       );
 
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Actions, useValue: actionsMock$ },
+        ],
+      });
+
       TestBed.runInInjectionContext(() => {
-        registerEffect(actionsMock$, authServiceMock).subscribe(action => {
+        registerEffect().subscribe(action => {
           expect(action).toEqual(
             authActions.registerFailure({ errors: mockErrors }),
           );
@@ -66,12 +81,17 @@ describe('AuthEffects', () => {
           authActions.registerSuccess({ currentUser: currentUserMock }),
         );
 
+        TestBed.configureTestingModule({
+          providers: [
+            { provide: Router, useValue: routerMock },
+            { provide: Actions, useValue: actionsMock$ },
+          ],
+        });
+
         TestBed.runInInjectionContext(() => {
-          redirectAfterRegisterEffect(actionsMock$, routerMock).subscribe(
-            () => {
-              expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/');
-            },
-          );
+          redirectAfterRegisterEffect().subscribe(() => {
+            expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/');
+          });
         });
       });
     });
@@ -86,8 +106,15 @@ describe('AuthEffects', () => {
         authActions.login({ payload: signInPayloadMock }),
       );
 
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Actions, useValue: actionsMock$ },
+        ],
+      });
+
       TestBed.runInInjectionContext(() => {
-        loginEffect(actionsMock$, authServiceMock).subscribe(action => {
+        loginEffect().subscribe(action => {
           expect(action).toEqual(
             authActions.loginSuccess({ currentUser: currentUserMock }),
           );
@@ -107,8 +134,15 @@ describe('AuthEffects', () => {
         authActions.login({ payload: signInPayloadMock }),
       );
 
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Actions, useValue: actionsMock$ },
+        ],
+      });
+
       TestBed.runInInjectionContext(() => {
-        loginEffect(actionsMock$, authServiceMock).subscribe(action => {
+        loginEffect().subscribe(action => {
           expect(action).toEqual(
             authActions.loginFailure({ errors: mockErrors }),
           );
@@ -125,8 +159,15 @@ describe('AuthEffects', () => {
           authActions.loginSuccess({ currentUser: currentUserMock }),
         );
 
+        TestBed.configureTestingModule({
+          providers: [
+            { provide: Router, useValue: routerMock },
+            { provide: Actions, useValue: actionsMock$ },
+          ],
+        });
+
         TestBed.runInInjectionContext(() => {
-          redirectAfterLoginEffect(actionsMock$, routerMock).subscribe(() => {
+          redirectAfterLoginEffect().subscribe(() => {
             expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/');
           });
         });
@@ -141,16 +182,21 @@ describe('AuthEffects', () => {
       } as unknown as AuthService;
       const actionsMock$ = of(authActions.getCurrentUser());
 
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Actions, useValue: actionsMock$ },
+        ],
+      });
+
       TestBed.runInInjectionContext(() => {
-        getCurrentUserEffect(actionsMock$, authServiceMock).subscribe(
-          action => {
-            expect(action).toEqual(
-              authActions.getCurrentUserSuccess({
-                currentUser: currentUserMock,
-              }),
-            );
-          },
-        );
+        getCurrentUserEffect().subscribe(action => {
+          expect(action).toEqual(
+            authActions.getCurrentUserSuccess({
+              currentUser: currentUserMock,
+            }),
+          );
+        });
       });
     });
 
