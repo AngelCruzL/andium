@@ -1,1 +1,51 @@
-<p>login works!</p>
+<div class="auth-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-xs-12">
+        <h1 class="text-xs-center">Sign In</h1>
+
+        <p class="text-xs-center">
+          <a routerLink="/auth/register">Need an account?</a>
+        </p>
+
+        <app-backend-error-messages
+          [backendErrors]="$data().validationErrors"
+        />
+
+        <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+          <fieldset class="form-group">
+            <label for="email">Email</label>
+            <input
+              class="form-control form-control-lg"
+              formControlName="email"
+              id="email"
+              name="email"
+              placeholder="sample@test.com"
+              type="text"
+            />
+          </fieldset>
+
+          <fieldset class="form-group">
+            <label for="password">Password</label>
+            <input
+              class="form-control form-control-lg"
+              formControlName="password"
+              id="password"
+              name="password"
+              placeholder="********"
+              type="password"
+            />
+          </fieldset>
+
+          <button
+            [disabled]="disableSubmit"
+            class="btn btn-lg btn-primary pull-xs-right"
+            type="submit"
+          >
+            Sign In
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

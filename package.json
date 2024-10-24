@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "ng lint",
     "prepare": "husky"
   },
@@ -20,6 +21,10 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "@ngrx/effects": "^18.0.2",
+    "@ngrx/router-store": "^18.0.2",
+    "@ngrx/store": "^18.0.2",
+    "@ngrx/store-devtools": "^18.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
@@ -30,9 +35,11 @@
     "@angular/compiler-cli": "^18.2.0",
     "@commitlint/cli": "19.4.1",
     "@commitlint/config-conventional": "19.4.1",
+    "@ngx-env/builder": "18.0.1",
     "@testing-library/angular": "17.3.1",
     "@testing-library/user-event": "14.5.2",
     "@types/jest": "29.5.12",
+    "@types/node": "22.5.2",
     "angular-eslint": "18.3.0",
     "eslint": "^9.9.0",
     "husky": "9.1.5",
@@ -40,6 +47,7 @@
     "jest-preset-angular": "14.2.2",
     "lint-staged": "15.2.9",
     "prettier": "3.3.3",
+    "ts-jest": "29.2.5",
     "typescript": "~5.5.2",
     "typescript-eslint": "8.1.0"
   }
