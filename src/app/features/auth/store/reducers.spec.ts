@@ -6,6 +6,7 @@ import {
 } from '../utils';
 import { authReducer, initialState } from './reducers';
 import { authActions } from './actions';
+import { CurrentUser } from '@shared/types';
 
 describe('AuthReducers', () => {
   it('should returns a default state', () => {
@@ -99,6 +100,50 @@ describe('AuthReducers', () => {
         isLoading: false,
         currentUser: undefined,
         validationErrors: errorMocks,
+      };
+
+      expect(state).toEqual(newState);
+    });
+  });
+
+  describe('getCurrentUser', () => {
+    it('should set isLoading to true when getCurrentUser action is dispatched', () => {
+      const action = authActions.getCurrentUser();
+      const state = authReducer(initialState, action);
+      const newState = {
+        ...initialState,
+        isLoading: true,
+      };
+
+      expect(state).toEqual(newState);
+    });
+
+    it('should set currentUser and isLoading to false when getCurrentUserSuccess action is dispatched', () => {
+      const currentUser: CurrentUser = {
+        bio: null,
+        image: null,
+        token: '',
+        username: 'testuser',
+        email: 'test@test.com',
+      };
+      const action = authActions.getCurrentUserSuccess({ currentUser });
+      const state = authReducer(initialState, action);
+      const newState = {
+        ...initialState,
+        isLoading: false,
+        currentUser,
+      };
+
+      expect(state).toEqual(newState);
+    });
+
+    it('should set currentUser to null and isLoading to false when getCurrentUserFailure action is dispatched', () => {
+      const action = authActions.getCurrentUserFailure();
+      const state = authReducer(initialState, action);
+      const newState = {
+        ...initialState,
+        isLoading: false,
+        currentUser: null,
       };
 
       expect(state).toEqual(newState);

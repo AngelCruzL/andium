@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { TopBarComponent } from '@shared/components';
+import { authActions } from './features/auth/store';
 
 @Component({
   selector: 'app-root',
@@ -12,4 +14,10 @@ import { TopBarComponent } from '@shared/components';
     <router-outlet />
   `,
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  #store = inject(Store);
+
+  ngOnInit(): void {
+    this.#store.dispatch(authActions.getCurrentUser());
+  }
+}

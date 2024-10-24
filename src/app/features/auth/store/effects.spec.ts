@@ -10,6 +10,7 @@ import {
 import { AuthService } from '../services';
 import { authActions } from './actions';
 import {
+  getCurrentUserEffect,
   loginEffect,
   redirectAfterLoginEffect,
   redirectAfterRegisterEffect,
@@ -129,6 +130,42 @@ describe('AuthEffects', () => {
             expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/');
           });
         });
+      });
+    });
+  });
+
+  describe('getCurrentUserEffect', () => {
+    it('should return a "getCurrentUserSuccess" action', () => {
+      const authServiceMock = {
+        getCurrentUser: () => of(currentUserMock),
+      } as unknown as AuthService;
+      const actionsMock$ = of(authActions.getCurrentUser());
+
+      TestBed.runInInjectionContext(() => {
+        getCurrentUserEffect(actionsMock$, authServiceMock).subscribe(
+          action => {
+            expect(action).toEqual(
+              authActions.getCurrentUserSuccess({
+                currentUser: currentUserMock,
+              }),
+            );
+          },
+        );
+      });
+    });
+
+    it('should return a "getCurrentUserFailure" action on error', () => {
+      const authServiceMock = {
+        getCurrentUser: () => throwError(() => new Error('Error')),
+      } as unknown as AuthService;
+      const actionsMock$ = of(authActions.getCurrentUser());
+
+      TestBed.runInInjectionContext(() => {
+        getCurrentUserEffect(actionsMock$, authServiceMock).subscribe(
+          action => {
+            expect(action).toEqual(authActions.getCurrentUserFailure());
+          },
+        );
       });
     });
   });

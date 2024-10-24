@@ -57,4 +57,15 @@ describe('AuthService', () => {
 
     expect(userResponse).toEqual(signInResponseMock.user);
   });
+
+  it('should get the current user successfully', () => {
+    let userResponse: CurrentUser | undefined;
+    service.getCurrentUser().subscribe(user => (userResponse = user));
+    const req = httpTestingController.expectOne(req =>
+      req.url.endsWith('/user'),
+    );
+    req.flush(signInResponseMock);
+
+    expect(userResponse).toEqual(signInResponseMock.user);
+  });
 });

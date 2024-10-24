@@ -13,6 +13,12 @@ export class AuthService {
   #http = inject(HttpClient);
   #baseUrl = environment.API_URL;
 
+  getCurrentUser(): Observable<CurrentUser> {
+    return this.#http
+      .get<SignInResponse>(`${this.#baseUrl}/user`)
+      .pipe(map(this.#getUser));
+  }
+
   register(payload: SignUpPayload): Observable<CurrentUser> {
     return this.#http
       .post<SignInResponse>(`${this.#baseUrl}/users`, payload)
