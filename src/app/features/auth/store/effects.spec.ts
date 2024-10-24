@@ -17,6 +17,7 @@ import {
   redirectAfterRegisterEffect,
   registerEffect,
 } from './effects';
+import { PersistenceService } from '@shared/services';
 
 describe('AuthEffects', () => {
   describe('register', () => {
@@ -212,6 +213,30 @@ describe('AuthEffects', () => {
             expect(action).toEqual(authActions.getCurrentUserFailure());
           },
         );
+      });
+    });
+
+    it('should return a "getCurrentUserFailure" action if no token is found', () => {
+      const authServiceMock = {
+        getCurrentUser: () => of(currentUserMock),
+      } as unknown as AuthService;
+      const actionsMock$ = of(authActions.getCurrentUser());
+      const persistenceServiceMock = {
+        get: () => null,
+      } as unknown as PersistenceService;
+
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Actions, useValue: actionsMock$ },
+          { provide: PersistenceService, useValue: persistenceServiceMock },
+        ],
+      });
+
+      TestBed.runInInjectionContext(() => {
+        getCurrentUserEffect().subscribe(action => {
+          expect(action).toEqual(authActions.getCurrentUserFailure());
+        });
       });
     });
   });
