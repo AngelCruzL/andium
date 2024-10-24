@@ -47,3 +47,67 @@ export const redirectAfterRegisterEffect = createEffect(
   },
   { functional: true, dispatch: false },
 );
+
+export const loginEffect = createEffect(
+  (
+    actions$ = inject(Actions),
+    authService = inject(AuthService),
+    persistenceService = inject(PersistenceService),
+  ) => {
+    return actions$.pipe(
+      ofType(authActions.login),
+      switchMap(({ payload }) =>
+        authService.login(payload).pipe(
+          map(currentUser => {
+            persistenceService.set('accessToken', currentUser.token);
+            return authActions.loginSuccess({ currentUser });
+          }),
+          catchError((errorResponse: HttpErrorResponse) =>
+            of(
+              authActions.loginFailure({
+                errors: errorResponse.error.errors,
+              }),
+            ),
+          ),
+        ),
+      ),
+    );
+  },
+  { functional: true },
+);
+
+export const redirectAfterLoginEffect = createEffect(
+  (actions$ = inject(Actions), router = inject(Router)) => {
+    return actions$.pipe(
+      ofType(authActions.loginSuccess),
+      tap(() => {
+        router.navigateByUrl('/');
+      }),
+    );
+  },
+  { functional: true, dispatch: false },
+);
+
+export const getCurrentUserEffect = createEffect(
+  (
+    actions$ = inject(Actions),
+    authService = inject(AuthService),
+    persistenceService = inject(PersistenceService),
+  ) => {
+    const token = persistenceService.get('accessToken');
+    if (!token) return of(authActions.getCurrentUserFailure());
+
+    return actions$.pipe(
+      ofType(authActions.getCurrentUser),
+      switchMap(() =>
+        authService.getCurrentUser().pipe(
+          map(currentUser => {
+            return authActions.getCurrentUserSuccess({ currentUser });
+          }),
+          catchError(() => of(authActions.getCurrentUserFailure())),
+        ),
+      ),
+    );
+  },
+  { functional: true },
+);

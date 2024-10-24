@@ -8,3 +8,5 @@ export interface AuthState {
 }
 
 export type RegisterState = Omit<AuthState, 'currentUser' | 'isLoading'>;
+
+export type TopBarState = Pick<AuthState, 'currentUser'>;
