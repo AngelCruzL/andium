@@ -1,0 +1,46 @@
+@let data = $data() ;
+
+@if (data.isLoading) {
+  <div>Loading</div>
+}
+
+@if (data.error) {
+  <div>Something went wrong {{ data.error }}</div>
+}
+
+@if (data.data) {
+  @for (article of data.data.articles; track article.slug) {
+    <div class="article-preview">
+      <div class="article-meta">
+        <a [routerLink]="['/profiles', article.author.username]">
+          <!--            [ngSrc]="article.author.image"-->
+          <img
+            ngSrc="https://th.bing.com/th/id/OIP.VTn0NAxal8BSB5W3ZTSdUAHaHT?rs=1&pid=ImgDetMain"
+            [alt]="article.author.username"
+            width="100"
+            height="100"
+          />
+        </a>
+
+        <div class="info">
+          <a [routerLink]="['/profiles', article.author.username]">
+            {{ article.author.username }}
+          </a>
+          <span class="date">{{ article.createdAt | date }}</span>
+        </div>
+
+        <div class="pull-xs-right">ADD TO FAVORITES</div>
+      </div>
+
+      <a [routerLink]="['/articles', article.slug]" class="preview-link">
+        <h1>{{ article.title }}</h1>
+        <p>{{ article.description }}</p>
+        <span>Read more...</span>
+
+        TAG LIST
+      </a>
+    </div>
+  }
+
+  PAGINATION
+}
