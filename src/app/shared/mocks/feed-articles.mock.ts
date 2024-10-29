@@ -1,4 +1,5 @@
 import { Article } from '@shared/types';
+import { mockAuthors } from './feed-author.mock';
 
 export const feedArticlesMock: Article[] = [
   {
@@ -11,6 +12,7 @@ export const feedArticlesMock: Article[] = [
     favorited: false,
     favoritesCount: 0,
     slug: 'article-1',
+    author: mockAuthors[0],
   },
   {
     title: 'Article 2',
@@ -22,6 +24,7 @@ export const feedArticlesMock: Article[] = [
     favorited: false,
     favoritesCount: 0,
     slug: 'article-2',
+    author: mockAuthors[2],
   },
   {
     title: 'Article 3',
@@ -33,6 +36,7 @@ export const feedArticlesMock: Article[] = [
     favorited: false,
     favoritesCount: 0,
     slug: 'article-3',
+    author: mockAuthors[1],
   },
   {
     title: 'Article 4',
@@ -44,6 +48,7 @@ export const feedArticlesMock: Article[] = [
     favorited: false,
     favoritesCount: 0,
     slug: 'article-4',
+    author: mockAuthors[1],
   },
   {
     title: 'Article 5',
@@ -55,5 +60,6 @@ export const feedArticlesMock: Article[] = [
     favorited: false,
     favoritesCount: 0,
     slug: 'article-5',
+    author: mockAuthors[0],
   },
 ];
