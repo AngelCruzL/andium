@@ -17,6 +17,7 @@ import {
   authFeatureKey,
   authReducer,
 } from './features/auth/store';
+import { feedEffects, feedFeatureKey, feedReducer } from '@shared/store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,7 +26,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore({ router: routerReducer }),
     provideState(authFeatureKey, authReducer),
-    provideEffects(authEffects),
+    provideState(feedFeatureKey, feedReducer),
+    provideEffects(authEffects, feedEffects),
     provideRouterStore(),
     provideStoreDevtools({
       maxAge: 25,
