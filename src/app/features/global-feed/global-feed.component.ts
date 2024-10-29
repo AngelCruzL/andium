@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { FeedComponent } from '@shared/components/feed/feed.component';
+import { BannerComponent, FeedComponent } from '@shared/components';
 
 @Component({
   selector: 'app-global-feed',
   standalone: true,
-  imports: [FeedComponent],
+  imports: [FeedComponent, BannerComponent],
   templateUrl: './global-feed.component.html',
   styles: ``,
 })
