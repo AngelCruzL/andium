@@ -1,11 +1,11 @@
-@let data = $data() ;
+@let data = $data();
 
 @if (data.isLoading) {
-  <div>Loading</div>
+  <app-loading />
 }
 
 @if (data.error) {
-  <div>Something went wrong {{ data.error }}</div>
+  <app-error-message [errorMessage]="data.error" />
 }
 
 @if (data.data) {
