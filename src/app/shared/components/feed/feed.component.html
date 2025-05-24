@@ -42,5 +42,10 @@
     </div>
   }
 
-  PAGINATION
+  <app-pagination
+    [paginationLimit]="+paginationLimit"
+    [currentPage]="currentPage"
+    [totalItems]="data.data.articlesCount"
+    [url]="baseUrl"
+  />
 }
