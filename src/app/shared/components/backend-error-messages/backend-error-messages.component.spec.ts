@@ -1,48 +1,43 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { render, screen } from '@testing-library/angular';
 
 import { BackendErrors } from '@shared/types';
 import { BackendErrorMessagesComponent } from '@shared/components';
 
+const setup = async (backendErrors?: BackendErrors) => {
+  await render(BackendErrorMessagesComponent, {
+    inputs: {
+      backendErrors: backendErrors ?? null,
+    },
+  });
+};
+
 describe('BackendErrorMessagesComponent', () => {
-  let component: BackendErrorMessagesComponent;
-  let fixture: ComponentFixture<BackendErrorMessagesComponent>;
+  it('should create', async () => {
+    await setup();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [BackendErrorMessagesComponent],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(BackendErrorMessagesComponent);
-    fixture.componentRef.setInput('backendErrors', null);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    const errorMessagesComponent = screen.queryByRole('alert');
+    expect(errorMessagesComponent).toBeTruthy();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  describe('Layout', () => {
+    it('should display error messages', async () => {
+      const backendErrors: BackendErrors = {
+        email: ['is invalid'],
+        password: ['is too short'],
+      };
+      await setup(backendErrors);
 
-  it('should display error messages', () => {
-    const backendErrors: BackendErrors = {
-      email: ['is invalid'],
-      password: ['is too short'],
-    };
-    fixture.componentRef.setInput('backendErrors', backendErrors);
-    fixture.detectChanges();
+      const errorMessages = screen.queryAllByRole('listitem')!;
+      expect(errorMessages.length).toBe(2);
+      expect(errorMessages[0].textContent).toContain('email is invalid');
+      expect(errorMessages[1].textContent).toContain('password is too short');
+    });
 
-    const compiled = fixture.nativeElement;
-    const errorMessages = compiled.querySelectorAll('li');
-    expect(errorMessages.length).toBe(2);
-    expect(errorMessages[0].textContent).toContain('email is invalid');
-    expect(errorMessages[1].textContent).toContain('password is too short');
-  });
+    it('should not display any error messages if backendErrors is null', async () => {
+      await setup();
 
-  it('should not display any error messages if backendErrors is null', () => {
-    fixture.componentRef.setInput('backendErrors', null);
-    fixture.detectChanges();
-
-    const compiled = fixture.nativeElement;
-    const errorMessages = compiled.querySelectorAll('li');
-    expect(errorMessages.length).toBe(0);
+      const errorMessages = screen.queryAllByRole('listitem')!;
+      expect(errorMessages.length).toBe(0);
+    });
   });
 });

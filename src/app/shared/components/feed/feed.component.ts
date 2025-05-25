@@ -32,11 +32,11 @@ import { PaginationComponent } from '@shared/components/pagination/pagination.co
 export class FeedComponent implements OnInit {
   apiUrl = input.required<string>();
   paginationLimit = environment.PAGINATION_LIMIT ?? 20;
-  currentPage: number = 0;
-  #router = inject(Router);
+  currentPage = 0;
+  readonly #router = inject(Router);
   baseUrl = this.#router.url.split('?')[0];
-  #route = inject(ActivatedRoute);
-  #store = inject(Store);
+  readonly #route = inject(ActivatedRoute);
+  readonly #store = inject(Store);
   $data = computed<FeedState>(() => ({
     isLoading: this.#store.selectSignal(selectIsLoading)(),
     error: this.#store.selectSignal(selectError)(),

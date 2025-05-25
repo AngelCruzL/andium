@@ -1,22 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { render, screen } from '@testing-library/angular';
 
-import { LoadingComponent } from './loading.component';
+import { LoadingComponent } from '@shared/components';
+
+const setup = async () => {
+  await render(LoadingComponent);
+};
 
 describe('LoadingComponent', () => {
-  let component: LoadingComponent;
-  let fixture: ComponentFixture<LoadingComponent>;
+  it('should create', async () => {
+    await setup();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [LoadingComponent],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(LoadingComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    const loader = screen.queryByTestId('loader');
+    expect(loader).toBeTruthy();
   });
 });

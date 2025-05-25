@@ -15,7 +15,7 @@ import { selectCurrentUser } from '../../../features/auth/store';
   styles: ``,
 })
 export class TopBarComponent {
-  #store = inject(Store);
+  readonly #store = inject(Store);
   $data: Signal<TopBarState> = toSignal(
     combineLatest({
       currentUser: this.#store.select(selectCurrentUser),

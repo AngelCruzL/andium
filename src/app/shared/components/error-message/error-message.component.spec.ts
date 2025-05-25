@@ -1,22 +1,35 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { render, screen } from '@testing-library/angular';
 
-import { ErrorMessageComponent } from './error-message.component';
+import { ErrorMessageComponent } from '@shared/components';
 
 describe('ErrorMessageComponent', () => {
-  let component: ErrorMessageComponent;
-  let fixture: ComponentFixture<ErrorMessageComponent>;
+  const setup = async (errorMessage?: string) => {
+    await render(ErrorMessageComponent, {
+      inputs: errorMessage ? { errorMessage } : {},
+    });
+  };
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ErrorMessageComponent],
-    }).compileComponents();
+  it('should create', async () => {
+    await setup();
 
-    fixture = TestBed.createComponent(ErrorMessageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    const errorMessageComponent = screen.queryByRole('alert');
+    expect(errorMessageComponent).toBeTruthy();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('Layout', () => {
+    it('should display the default error message if no one is provided', async () => {
+      await setup();
+
+      const errorMessage = screen.queryByRole('alert');
+      expect(errorMessage!.textContent!.trim()).toBe('Something went wrong');
+    });
+
+    it('should display the provided error message', async () => {
+      const customErrorMessage = 'Custom error occurred';
+      await setup(customErrorMessage);
+
+      const errorMessage = screen.queryByRole('alert');
+      expect(errorMessage!.textContent!.trim()).toBe(customErrorMessage);
+    });
   });
 });

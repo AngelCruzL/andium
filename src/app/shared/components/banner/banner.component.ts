@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <div class="banner">
+    <div class="banner" role="banner">
       <div class="container">
         <h1>Medium Clone</h1>
         <p>Place to share your knowledge.</p>

@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-loading',
   standalone: true,
   imports: [],
-  template: ` <div>Loading</div> `,
+  template: ` <div data-testId="loader">Loading...</div> `,
   styles: ``,
 })
 export class LoadingComponent {}

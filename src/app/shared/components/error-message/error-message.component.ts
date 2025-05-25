@@ -5,7 +5,7 @@ import { Component, input } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <div>
+    <div role="alert">
       {{ errorMessage() }}
     </div>
   `,

@@ -1,24 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { render, screen } from '@testing-library/angular';
+import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 
 import { GlobalFeedComponent } from './global-feed.component';
 
 describe('GlobalFeedComponent', () => {
-  let component: GlobalFeedComponent;
-  let fixture: ComponentFixture<GlobalFeedComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [GlobalFeedComponent],
+  const setup = async () => {
+    await render(GlobalFeedComponent, {
       providers: [provideMockStore({})],
-    }).compileComponents();
+      imports: [RouterTestingModule],
+    });
+  };
 
-    fixture = TestBed.createComponent(GlobalFeedComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  it('should create', async () => {
+    await setup();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    const globalFeedComponent = screen.queryByTestId('home-page');
+    expect(globalFeedComponent).toBeTruthy();
   });
 });
