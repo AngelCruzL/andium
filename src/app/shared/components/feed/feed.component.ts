@@ -15,6 +15,7 @@ import { FeedState } from '@shared/types';
 import { LoadingComponent } from '@shared/components/loading/loading.component';
 import { ErrorMessageComponent } from '@shared/components/error-message/error-message.component';
 import { PaginationComponent } from '@shared/components/pagination/pagination.component';
+import { TagListComponent } from '@shared/components/tag-list/tag-list.component';
 
 @Component({
   selector: 'app-feed',
@@ -26,6 +27,7 @@ import { PaginationComponent } from '@shared/components/pagination/pagination.co
     LoadingComponent,
     ErrorMessageComponent,
     PaginationComponent,
+    TagListComponent,
   ],
   templateUrl: './feed.component.html',
   styles: ``,
