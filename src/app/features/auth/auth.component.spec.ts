@@ -1,22 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AuthComponent } from './auth.component';
+import { render } from '@testing-library/angular';
+
+const setup = async () => {
+  return await render(AuthComponent, {
+    imports: [AuthComponent],
+  });
+};
 
 describe('AuthComponent', () => {
-  let component: AuthComponent;
-  let fixture: ComponentFixture<AuthComponent>;
+  it('should create', async () => {
+    const { fixture } = await setup();
+    const authComponent = fixture.debugElement.componentInstance;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AuthComponent],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(AuthComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(authComponent).toBeTruthy();
   });
 });
