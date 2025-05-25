@@ -2,6 +2,7 @@ import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
+import queryString from 'query-string';
 
 import { environment } from '@env/environment';
 import {
@@ -51,6 +52,15 @@ export class FeedComponent implements OnInit {
   }
 
   #fetchFeed(): void {
-    this.#store.dispatch(feedActions.getFeed({ url: this.apiUrl() }));
+    const offset =
+      this.currentPage * +this.paginationLimit - +this.paginationLimit;
+    const parsedUrl = queryString.parseUrl(this.apiUrl());
+    const stringifiedParams = queryString.stringify({
+      limit: this.paginationLimit,
+      offset,
+      ...parsedUrl.query,
+    });
+    const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`;
+    this.#store.dispatch(feedActions.getFeed({ url: apiUrlWithParams }));
   }
 }
